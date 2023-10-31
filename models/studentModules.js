@@ -23,6 +23,10 @@ module.exports.getStudentModule = function getStudentModule(studentId, code) {
 module.exports.addStudentModule = function addStudentModule(studentId, code, grade) {
     const connection = getConnection();
     // To replicate foreign-key. Q: Explain what this is preventing.
+    //Prevents adding adding a student to a module that doesn't exist
+    //Scenario is duplicate entry.
+    //they are handled sequentially 
+    //No need to be sequentially because it relies on prev func result
     return getModule(code)
         .then(() => getStudent(studentId))
         .then(() =>
@@ -41,6 +45,9 @@ module.exports.addStudentModule = function addStudentModule(studentId, code, gra
             else throw error;
         });
 };
+
+//Q3
+//1.5
 
 module.exports.updateStudentModule = function updateStudentModule(studentId, code, grade) {
     const connection = getConnection();
